@@ -7,12 +7,14 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { ComposedProviders } from "./components/ComposedProviders";
 
+// TODO: uncomment StrictMode after material-ui 5.x stable release
+
 ReactDOM.render(
-  <React.StrictMode>
-    <ComposedProviders>
-      <App />
-    </ComposedProviders>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ComposedProviders>
+    <App />
+  </ComposedProviders>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 
