@@ -18,11 +18,8 @@ export const CreateGamePage: FC = () => {
 
   const handleNextClick = () => {
     if (activeStep === 1 && buzzwords.length !== gameSize) {
-      const errorMessage =
-        buzzwords.length < gameSize
-          ? "Zu wenig Schlagwörter ausgewählt."
-          : "Zu viele Schlagwörter ausgewählt.";
-      showError(errorMessage);
+      const fewOrMany = buzzwords.length < gameSize ? "wenige" : "viele";
+      showError(`Zu ${fewOrMany} Schlagwörter ausgewählt.`);
       return;
     }
 
