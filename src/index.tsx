@@ -5,10 +5,13 @@ import "./index.css";
 import { App } from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
+import { ComposedContextProviders } from "./context/ComposedContextProviders";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ComposedContextProviders>
+      <App />
+    </ComposedContextProviders>
   </React.StrictMode>,
   document.getElementById("root")
 );
