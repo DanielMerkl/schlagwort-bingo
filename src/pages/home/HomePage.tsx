@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { Add, ExitToApp } from "@material-ui/icons";
 import styled from "styled-components";
 
-import { Path } from "../../typing/enum/path";
+import { Path } from "../../typing/enum/Path";
 
 export const HomePage: FC = () => {
   const history = useHistory();

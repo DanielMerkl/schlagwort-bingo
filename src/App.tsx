@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
-import { Path } from "./typing/enum/path";
+import { Path } from "./typing/enum/Path";
 import { Header } from "./components/Header";
 import { HomePage } from "./pages/home/HomePage";
 import { CreateGamePage } from "./pages/createGame/CreateGamePage";

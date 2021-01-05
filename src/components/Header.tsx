@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 
-import { Path } from "../typing/enum/path";
+import { Path } from "../typing/enum/Path";
 
 export const Header: FC = () => {
   const history = useHistory();
