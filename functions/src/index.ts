@@ -31,8 +31,8 @@ export const deleteOldGames = functions.firestore
     const yesterday: Date = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const gamesCollectionReference = createdGame.ref.parent;
-    const games = await gamesCollectionReference
+    const oldGames = await gamesCollectionReference
       .where("createdAt", "<", yesterday)
       .get();
-    games.forEach((oldGame) => oldGame.ref.delete());
+    oldGames.forEach((oldGame) => oldGame.ref.delete());
   });
