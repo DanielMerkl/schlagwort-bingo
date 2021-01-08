@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, Step, StepButton, Stepper } from "@material-ui/core";
 import styled from "styled-components";
 
@@ -8,8 +9,10 @@ import { useSnackbar } from "../../context/SnackbarContext";
 import { ShareInvitationCodeStep } from "./ShareInvitationCodeStep";
 import { Api } from "../../utils/Api";
 import { LoadingButton } from "../../components/LoadingButton";
+import { Path } from "../../typing/enum/Path";
 
 export const CreateGamePage: FC = () => {
+  const history = useHistory();
   const { showError, showSuccess } = useSnackbar();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -40,7 +43,7 @@ export const CreateGamePage: FC = () => {
   };
 
   const handleStartGameClick = () => {
-    // TODO: implement
+    history.push(`${Path.Game}/${invitationCode}`);
   };
 
   return (
