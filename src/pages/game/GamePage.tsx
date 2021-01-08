@@ -34,21 +34,25 @@ export const GamePage: FC = () => {
 
   return (
     <Wrapper>
-      <Typography>Game Page</Typography>
       {isLoading ? (
         <LinearProgress />
       ) : (
-        <ul>
-          {game?.buzzwords.map((buzzword) => (
-            <li key={buzzword}>{buzzword}</li>
-          ))}
-        </ul>
+        <div>
+          <Typography>ID des Spiels: {gameId}</Typography>
+          <ul>
+            {game?.buzzwords.map((buzzword) => (
+              <li key={buzzword}>{buzzword}</li>
+            ))}
+          </ul>
+        </div>
       )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.main`
+  padding: 1rem;
   display: grid;
   gap: 1rem;
+  align-content: start;
 `;
