@@ -21,8 +21,8 @@ export const generateInvitationCode = functions.https.onCall(async () => {
 });
 
 /**
- * This database triggered function will check for games that are older than the
- * cut-off time. Each game needs to have a `createdAt` attribute.
+ * This database triggered function will check for games that are older than one
+ * day. Each game needs to have a `createdAt` attribute.
  * see: https://github.com/firebase/functions-samples/tree/master/delete-old-child-nodes
  */
 export const deleteOldGames = functions.firestore
