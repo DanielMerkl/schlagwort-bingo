@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { LinearProgress, Typography } from "@material-ui/core";
 import styled from "styled-components";
 
 import { Firebase } from "../../firebase/Firebase";
 import { Game } from "../../typing/interface/Game";
+import { Path } from "../../typing/enum/Path";
 
 interface Params {
   gameId: string;
@@ -12,6 +13,7 @@ interface Params {
 
 export const GamePage: FC = () => {
   const { gameId } = useParams<Params>();
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(true);
   const [game, setGame] = useState<Game | null>(null);
@@ -23,6 +25,11 @@ export const GamePage: FC = () => {
         .doc(gameId)
         .get();
 
+      if (!documentSnapshot.exists) {
+        history.push(Path.Game + "/not-found");
+        return;
+      }
+
       const game: Game = documentSnapshot.data() as Game;
       console.log("game: ", game);
       setGame(game);
@@ -30,7 +37,7 @@ export const GamePage: FC = () => {
     };
 
     fetchGame();
-  }, [gameId]);
+  }, [gameId, history]);
 
   return (
     <Wrapper>
