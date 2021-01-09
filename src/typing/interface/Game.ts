@@ -1,4 +1,5 @@
 export interface Game {
-  invitationCode: number;
+  id: number;
   buzzwords: Array<string>;
+  createdAt: Date;
 }

@@ -33,7 +33,7 @@ export const CreateGamePage: FC = () => {
     setIsLoading(true);
     try {
       const game = await Api.createGame(buzzwords);
-      setInvitationCode(game.invitationCode);
+      setInvitationCode(game.id);
       setActiveStep((prevState) => prevState + 1);
       showSuccess("Spiel erfolgreich erstellt");
     } catch (e) {

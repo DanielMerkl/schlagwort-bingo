@@ -1,5 +1,3 @@
-import firebase from "firebase";
-
 import { Firebase } from "../firebase/Firebase";
 import { Game } from "../typing/interface/Game";
 
@@ -14,15 +12,17 @@ const generateInvitationCode = async (): Promise<number> => {
 
 const createGame = async (buzzwords: Array<string>): Promise<Game> => {
   const invitationCode = await generateInvitationCode();
+  const newGame = {
+    id: invitationCode,
+    buzzwords,
+    createdAt: new Date(),
+  };
   await Firebase.firestore()
     .collection("games")
     .doc(invitationCode.toString())
-    .set({
-      buzzwords,
-      createdAt: firebase.firestore.Timestamp.now(),
-    });
+    .set(newGame);
 
-  return { invitationCode, buzzwords };
+  return newGame;
 };
 
 export const Api = {
