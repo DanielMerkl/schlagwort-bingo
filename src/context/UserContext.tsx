@@ -5,12 +5,12 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import firebase from "firebase";
 
 import { Firebase } from "../firebase/Firebase";
+import { FirebaseUser } from "../typing/type/FirebaseUser";
 
 interface IUserContext {
-  user: firebase.User | null;
+  user: FirebaseUser | null;
   isLoggedIn: boolean;
 }
 
@@ -20,7 +20,7 @@ const UserContext = createContext<IUserContext>({
 });
 
 export const UserContextProvider: FC = ({ children }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
 
   useEffect(() => {
     async function loginAnonymously() {
