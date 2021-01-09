@@ -26,6 +26,7 @@ export const Header: FC = () => {
     <AppBar position="sticky">
       <Toolbar variant="dense">
         <IconButton
+          aria-label="home"
           edge="start"
           color="inherit"
           onClick={() => history.push(Path.Home)}
