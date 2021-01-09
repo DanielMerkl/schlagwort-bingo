@@ -103,7 +103,7 @@ const PageWrapper = styled.main`
 const FormWrapper = styled.div`
   width: 100%;
   max-width: 400px;
-  padding: 2rem;
+  padding: 1rem;
   justify-self: center;
   display: grid;
   gap: 1rem;
