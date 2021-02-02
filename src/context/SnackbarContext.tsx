@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useMemo, useState } from "react";
 import { Snackbar } from "@material-ui/core";
 import { Alert, Color } from "@material-ui/lab";
 
@@ -47,10 +47,17 @@ export const SnackbarContextProvider: FC = ({ children }) => {
 
   const closeSnackbar = () => setOpen(false);
 
+  const memoizedContext: ISnackbarContext = useMemo(() => {
+    return {
+      showError,
+      showWarning,
+      showInfo,
+      showSuccess,
+    };
+  }, []);
+
   return (
-    <SnackbarContext.Provider
-      value={{ showError, showWarning, showInfo, showSuccess }}
-    >
+    <SnackbarContext.Provider value={memoizedContext}>
       {children}
       <Snackbar
         open={open}
