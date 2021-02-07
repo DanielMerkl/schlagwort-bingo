@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { Path } from "../../typing/enum/Path";
 
+// TODO: vernünftige Call-To-Actions implementieren
 export const HomePage: FC = () => {
   const history = useHistory();
 
