@@ -47,7 +47,7 @@ export const CreateGamePage: FC = () => {
   };
 
   return (
-    <PageWrapper>
+    <PageWrapper style={{ maxHeight: "600px" }}>
       <Stepper alternativeLabel activeStep={activeStep}>
         <Step disabled={gameWasCreated}>
           <StepButton onClick={() => setActiveStep(0)}>
