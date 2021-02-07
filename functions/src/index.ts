@@ -36,3 +36,15 @@ export const deleteOldGames = functions.firestore
       .get();
     oldGames.forEach((oldGame) => oldGame.ref.delete());
   });
+
+/**
+ * This database triggered function will set the winner of a game to null in
+ * order to save the winner for only a small period of time. This prevents other
+ * players connecting to a game to receive a winner-notification right after
+ * joining.
+ */
+export const resetWinner = functions.firestore
+  .document("/games/{gameId}")
+  .onUpdate((updatedGame) => {
+    updatedGame.after.ref.update({ winner: null });
+  });
