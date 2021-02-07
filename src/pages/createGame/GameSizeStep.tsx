@@ -19,7 +19,6 @@ export const GameSizeStep: FC<Props> = ({ gameSize, setGameSize }) => (
       >
         <MenuItem value={9}>9 Schlagwörter (3x3)</MenuItem>
         <MenuItem value={16}>16 Schlagwörter (4x4)</MenuItem>
-        <MenuItem value={25}>25 Schlagwörter (5x5)</MenuItem>
       </Select>
     </FormControl>
   </Wrapper>
