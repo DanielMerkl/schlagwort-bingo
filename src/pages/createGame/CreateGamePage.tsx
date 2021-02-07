@@ -10,8 +10,10 @@ import { ShareInvitationCodeStep } from "./ShareInvitationCodeStep";
 import { Api } from "../../utils/Api";
 import { LoadingButton } from "../../components/LoadingButton";
 import { Path } from "../../typing/enum/Path";
+import { useMobileScreen } from "../../utils/hooks/useMobileScreen";
 
 export const CreateGamePage: FC = () => {
+  const isMobileScreen = useMobileScreen();
   const history = useHistory();
   const { showError, showSuccess } = useSnackbar();
 
@@ -47,7 +49,7 @@ export const CreateGamePage: FC = () => {
   };
 
   return (
-    <PageWrapper style={{ maxHeight: "600px" }}>
+    <PageWrapper style={{ maxHeight: !isMobileScreen ? "600px" : undefined }}>
       <Stepper alternativeLabel activeStep={activeStep}>
         <Step disabled={gameWasCreated}>
           <StepButton onClick={() => setActiveStep(0)}>
