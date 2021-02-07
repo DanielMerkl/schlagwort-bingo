@@ -16,6 +16,7 @@ const createGame = async (buzzwords: Array<string>): Promise<Game> => {
     id: invitationCode,
     buzzwords,
     createdAt: new Date(),
+    winner: null,
   };
   await Firebase.firestore()
     .collection("games")
