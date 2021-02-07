@@ -1,11 +1,5 @@
 import React, { FC, useState } from "react";
-import {
-  Button,
-  Fab,
-  TextField,
-  Theme,
-  useMediaQuery,
-} from "@material-ui/core";
+import { Button, Fab, TextField } from "@material-ui/core";
 import styled from "styled-components";
 
 import { HorizontalLoadingIndicator } from "../../components/HorizontalLoadingIndicator";
@@ -15,11 +9,10 @@ import { calculateGameStyles } from "./calculateGameStyles";
 import { useWinnerNotification } from "./useWinnerNotification";
 import { Firebase } from "../../firebase/Firebase";
 import { useSnackbar } from "../../context/SnackbarContext";
+import { useMobileScreen } from "../../utils/hooks/useMobileScreen";
 
 export const GamePage: FC = () => {
-  const isLargerScreen = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.up("sm")
-  );
+  const isMobileScreen = useMobileScreen();
   const { showError } = useSnackbar();
   const game = useGame();
   const gameStyles = calculateGameStyles(game);
@@ -65,7 +58,7 @@ export const GamePage: FC = () => {
   return (
     <PageWrapper
       style={{
-        alignSelf: isLargerScreen ? "start" : "initial",
+        alignSelf: !isMobileScreen ? "start" : "initial",
       }}
     >
       <HorizontalLoadingIndicator isLoading={game === null} />
