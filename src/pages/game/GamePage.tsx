@@ -1,65 +1,92 @@
-import React, { FC, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { LinearProgress, Typography } from "@material-ui/core";
+import React, { FC, useState } from "react";
+import { Button, Fab, TextField } from "@material-ui/core";
 import styled from "styled-components";
 
-import { Firebase } from "../../firebase/Firebase";
-import { Game } from "../../typing/interface/Game";
-import { Path } from "../../typing/enum/Path";
-
-interface Params {
-  gameId: string;
-}
+import { HorizontalLoadingIndicator } from "../../components/HorizontalLoadingIndicator";
+import { checkBingo } from "./checkBingo";
+import { useGame } from "./useGame";
+import { calculateGameStyles } from "./calculateGameStyles";
 
 export const GamePage: FC = () => {
-  const { gameId } = useParams<Params>();
-  const history = useHistory();
+  const game = useGame();
+  const gameStyles = calculateGameStyles(game);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [game, setGame] = useState<Game | null>(null);
+  const [username, setUsername] = useState("");
+  const [selectedBuzzwords, setSelectedBuzzwords] = useState<Array<string>>([]);
 
-  useEffect(() => {
-    const fetchGame = async () => {
-      const documentSnapshot = await Firebase.firestore()
-        .collection("games")
-        .doc(gameId)
-        .get();
+  const isBingo: boolean = checkBingo(game?.buzzwords, selectedBuzzwords);
 
-      if (!documentSnapshot.exists) {
-        history.push(Path.Game + "/not-found");
-        return;
-      }
+  const handleBuzzwordClick = (clickedBuzzword: string) => {
+    if (selectedBuzzwords.includes(clickedBuzzword)) {
+      setSelectedBuzzwords((prevSelectedBuzzwords) =>
+        prevSelectedBuzzwords.filter(
+          (selectedBuzzword) => selectedBuzzword !== clickedBuzzword
+        )
+      );
+    } else {
+      setSelectedBuzzwords((prevSelectedBuzzwords) => [
+        ...prevSelectedBuzzwords,
+        clickedBuzzword,
+      ]);
+    }
+  };
 
-      const game: Game = documentSnapshot.data() as Game;
-      console.log("game: ", game);
-      setGame(game);
-      setIsLoading(false);
-    };
-
-    fetchGame();
-  }, [gameId, history]);
+  async function handleBingoClick() {
+    // TODO: cloud messaging triggern mit aktuellem Usernamen und Game-ID
+  }
 
   return (
-    <Wrapper>
-      {isLoading ? (
-        <LinearProgress />
-      ) : (
-        <div>
-          <Typography>ID des Spiels: {gameId}</Typography>
-          <ul>
-            {game?.buzzwords.map((buzzword) => (
-              <li key={buzzword}>{buzzword}</li>
-            ))}
-          </ul>
+    <PageWrapper>
+      <HorizontalLoadingIndicator isLoading={game === null} />
+      <TextField
+        variant="outlined"
+        color="primary"
+        label="Spielername"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+      />
+      {game && (
+        <div style={gameStyles}>
+          {game.buzzwords.map((buzzword) => {
+            const isSelected = selectedBuzzwords.includes(buzzword);
+            return (
+              <Button
+                key={buzzword}
+                onClick={() => handleBuzzwordClick(buzzword)}
+                variant={isSelected ? "contained" : "outlined"}
+                color={isSelected ? "primary" : "default"}
+                style={{
+                  hyphens: "auto",
+                  fontSize: "small",
+                  padding: "1px",
+                  overflowY: "auto",
+                }}
+              >
+                {buzzword}
+              </Button>
+            );
+          })}
         </div>
       )}
-    </Wrapper>
+      <div />
+      <Fab
+        variant="extended"
+        color="primary"
+        disabled={!isBingo}
+        onClick={handleBingoClick}
+      >
+        Bingo
+      </Fab>
+    </PageWrapper>
   );
 };
 
-const Wrapper = styled.main`
+const PageWrapper = styled.main`
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  align-content: start;
+  width: 100%;
+  justify-self: center;
+  max-width: 500px;
+  grid-template-rows: auto auto auto 1fr auto;
 `;
