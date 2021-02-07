@@ -51,7 +51,7 @@ export const GamePage: FC = () => {
     if (game === null) return;
 
     if (username === "") {
-      showError("Bitte gebe noch einen Benutzernamen an!");
+      showError("Bitte gib noch einen Benutzernamen an!");
       return;
     }
 
