@@ -1,18 +1,34 @@
 import React, { FC, useState } from "react";
-import { Button, Fab, TextField } from "@material-ui/core";
+import {
+  Button,
+  Fab,
+  TextField,
+  Theme,
+  useMediaQuery,
+} from "@material-ui/core";
 import styled from "styled-components";
 
 import { HorizontalLoadingIndicator } from "../../components/HorizontalLoadingIndicator";
 import { checkBingo } from "./checkBingo";
 import { useGame } from "./useGame";
 import { calculateGameStyles } from "./calculateGameStyles";
+import { useWinnerNotification } from "./useWinnerNotification";
+import { Firebase } from "../../firebase/Firebase";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 export const GamePage: FC = () => {
+  const isLargerScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.up("sm")
+  );
+  const { showError } = useSnackbar();
   const game = useGame();
   const gameStyles = calculateGameStyles(game);
 
   const [username, setUsername] = useState("");
   const [selectedBuzzwords, setSelectedBuzzwords] = useState<Array<string>>([]);
+  const [hasClickedBingo, setHasClickedBingo] = useState(false);
+
+  useWinnerNotification(game, username);
 
   const isBingo: boolean = checkBingo(game?.buzzwords, selectedBuzzwords);
 
@@ -32,11 +48,26 @@ export const GamePage: FC = () => {
   };
 
   async function handleBingoClick() {
-    // TODO: cloud messaging triggern mit aktuellem Usernamen und Game-ID
+    if (game === null) return;
+
+    if (username === "") {
+      showError("Bitte gebe noch einen Benutzernamen an!");
+      return;
+    }
+
+    await Firebase.firestore()
+      .collection("games")
+      .doc(game.id.toString())
+      .update({ winner: username });
+    setHasClickedBingo(true);
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper
+      style={{
+        alignSelf: isLargerScreen ? "start" : "initial",
+      }}
+    >
       <HorizontalLoadingIndicator isLoading={game === null} />
       <TextField
         variant="outlined"
@@ -72,7 +103,7 @@ export const GamePage: FC = () => {
       <Fab
         variant="extended"
         color="primary"
-        disabled={!isBingo}
+        disabled={!isBingo || hasClickedBingo}
         onClick={handleBingoClick}
       >
         Bingo
