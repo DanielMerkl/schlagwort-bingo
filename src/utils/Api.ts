@@ -12,7 +12,7 @@ const generateInvitationCode = async (): Promise<number> => {
 
 const createGame = async (buzzwords: Array<string>): Promise<Game> => {
   const invitationCode = await generateInvitationCode();
-  const newGame = {
+  const newGame: Game = {
     id: invitationCode,
     buzzwords,
     createdAt: new Date(),
