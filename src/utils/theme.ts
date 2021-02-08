@@ -1,5 +1,9 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 export const theme = createMuiTheme({
-  // TODO: override theme
+  palette: {
+    primary: {
+      main: "#01579b",
+    },
+  },
 });
