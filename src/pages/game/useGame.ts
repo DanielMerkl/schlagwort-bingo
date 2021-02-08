@@ -15,6 +15,15 @@ export const useGame = (): Game | null => {
   const [game, setGame] = useState<Game | null>(null);
 
   useEffect(() => {
+    // Fisher-Yates shuffle algorithm
+    const shuffle = (array: Array<any>) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
     const fetchGame = async () => {
       const documentSnapshot = await Firebase.firestore()
         .collection("games")
@@ -27,7 +36,10 @@ export const useGame = (): Game | null => {
       }
 
       const game: Game = documentSnapshot.data() as Game;
-      setGame(game);
+      setGame({
+        ...game,
+        buzzwords: shuffle(game.buzzwords),
+      });
     };
 
     fetchGame();
