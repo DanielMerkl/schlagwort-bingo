@@ -62,45 +62,47 @@ export const GamePage: FC = () => {
       }}
     >
       <HorizontalLoadingIndicator isLoading={game === null} />
-      <TextField
-        variant="outlined"
-        color="primary"
-        label="Spielername"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
-      />
       {game && (
-        <div style={gameStyles}>
-          {game.buzzwords.map((buzzword) => {
-            const isSelected = selectedBuzzwords.includes(buzzword);
-            return (
-              <Button
-                key={buzzword}
-                onClick={() => handleBuzzwordClick(buzzword)}
-                variant={isSelected ? "contained" : "outlined"}
-                color={isSelected ? "primary" : "default"}
-                style={{
-                  hyphens: "auto",
-                  fontSize: "small",
-                  padding: "1px",
-                  overflowY: "auto",
-                }}
-              >
-                {buzzword}
-              </Button>
-            );
-          })}
-        </div>
+        <>
+          <TextField
+            variant="outlined"
+            color="primary"
+            label="Spielername"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <div style={gameStyles}>
+            {game.buzzwords.map((buzzword) => {
+              const isSelected = selectedBuzzwords.includes(buzzword);
+              return (
+                <Button
+                  key={buzzword}
+                  onClick={() => handleBuzzwordClick(buzzword)}
+                  variant={isSelected ? "contained" : "outlined"}
+                  color={isSelected ? "primary" : "default"}
+                  style={{
+                    hyphens: "auto",
+                    fontSize: "small",
+                    padding: "1px",
+                    overflowY: "auto",
+                  }}
+                >
+                  {buzzword}
+                </Button>
+              );
+            })}
+          </div>
+          <div />
+          <Fab
+            variant="extended"
+            color="primary"
+            disabled={!isBingo || hasClickedBingo}
+            onClick={handleBingoClick}
+          >
+            Bingo
+          </Fab>
+        </>
       )}
-      <div />
-      <Fab
-        variant="extended"
-        color="primary"
-        disabled={!isBingo || hasClickedBingo}
-        onClick={handleBingoClick}
-      >
-        Bingo
-      </Fab>
     </PageWrapper>
   );
 };
