@@ -13,7 +13,7 @@ import { useMobileScreen } from "../../utils/hooks/useMobileScreen";
 
 export const GamePage: FC = () => {
   const isMobileScreen = useMobileScreen();
-  const { showError } = useSnackbar();
+  const { showError, showSuccess } = useSnackbar();
   const game = useGame();
   const gameStyles = calculateGameStyles(game);
 
@@ -53,6 +53,7 @@ export const GamePage: FC = () => {
       .doc(game.id.toString())
       .update({ winner: username });
     setHasClickedBingo(true);
+    showSuccess("Mitspieler wurden benachrichtigt!");
   }
 
   return (
