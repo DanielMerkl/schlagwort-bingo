@@ -114,6 +114,6 @@ const PageWrapper = styled.main`
   gap: 1rem;
   width: 100%;
   justify-self: center;
-  max-width: 500px;
+  max-width: 700px;
   grid-template-rows: auto auto auto 1fr auto;
 `;

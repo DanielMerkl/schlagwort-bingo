@@ -4,7 +4,7 @@ import { Game } from "../../typing/interface/Game";
 export const calculateGameStyles = (game: Game | null): CSSProperties => {
   const gameSize = game !== null ? Math.sqrt(game.buzzwords.length) : 0;
 
-  const maxWidth = "500px";
+  const maxWidth = "700px";
   const gapWidth = `${(gameSize - 1) / 4}rem`;
   const paddingWidth = `2rem`;
   const dynamicHeight = `calc((100vw - ${paddingWidth} - ${gapWidth}) / ${gameSize})`;
